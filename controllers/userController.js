@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import QueueController from "../controllers/QueueController.js";
 
 const userController = {
 
@@ -67,6 +68,8 @@ const userController = {
 
 
             console.log(`O usuario ${user.name} fez login`)
+
+            QueueController.insertUser(user._id)
 
             res.status(200).json({ message: "Login successful", token });
 
