@@ -7,6 +7,8 @@ const userController = {
         try {
 
 
+
+
             const { name, email, password } = req.body;
 
             const user = await User.create({
