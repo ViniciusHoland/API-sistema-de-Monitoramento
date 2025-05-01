@@ -12,6 +12,6 @@ const queueSchema = new mongoose.Schema({
     }
 })
 
-const Queue = mongoose.model('Queue', queueSchema)
+const QueueModel = mongoose.model('Queue', queueSchema)
 
-export default Queue
+export default QueueModel

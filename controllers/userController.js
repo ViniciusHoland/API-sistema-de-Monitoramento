@@ -69,6 +69,7 @@ const userController = {
 
             console.log(`O usuario ${user.name} fez login`)
 
+
             QueueController.insertUser(user._id)
 
             res.status(200).json({ message: "Login successful", token });
@@ -79,6 +80,23 @@ const userController = {
         }
 
     }, 
+
+    getAllUser: async (req,res) => {
+
+        try{
+
+            const users = await User.find();
+
+            res.status(200).json(users);
+
+
+
+        } catch (error) {
+            res.status(500).json({ message: "error for get all users" + error.message });
+        }
+
+
+    }
 
 };
 
