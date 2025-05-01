@@ -44,6 +44,10 @@ const queueController = {
                 };
               });
 
+               getprox()
+
+          
+
               res.status(200).json(formattedQueues);
 
 
@@ -52,11 +56,30 @@ const queueController = {
         }
     },
 
+    getProxQueue: async (req, res) => {
+
+        try{
+
+            const queue = await Queue.findOne().sort({ enteredAt: 1 }).populate('user', 'name');
+
+            return  res.status(200).json(queue.user.name)
+
+
+        } catch (error) {
+            res.status(500).json({ message: "error for get prox queues" + error.message });
+        }
+
+
+    },
+
     deleteAllQueues: async (req, res) => {
         try{
 
-            
+
             await Queue.deleteMany()
+
+
+            res.status(200).json({ message: "All queues deleted" });
 
 
         } catch (error) {
@@ -64,6 +87,12 @@ const queueController = {
         }
     }
 
+}
+
+async function getprox(){
+    const queue = await Queue.findOne().sort({ enteredAt: 1 }).populate('user', 'name');
+
+    console.log( "o proximo atendente é " + queue.user.name)
 }
 
 export default queueController
