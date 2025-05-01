@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const userController = {
 
@@ -62,7 +63,12 @@ const userController = {
                 return res.status(400).json({ message: "Invalid credentials" });
             }
 
-            res.status(200).json({ message: "Login successful" });
+            const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET, {expiresIn: "1d"})
+
+
+            console.log(`O usuario ${user.name} fez login`)
+
+            res.status(200).json({ message: "Login successful", token });
 
 
         } catch(error){
