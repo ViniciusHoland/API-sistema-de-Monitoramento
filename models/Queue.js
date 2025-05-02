@@ -6,6 +6,10 @@ const queueSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    quantityAtendimentos: {
+        type: Number,
+        default: 0
+    },
     enteredAt: {
         type: Date,
         default: Date.now

@@ -15,15 +15,22 @@ const queueController = {
     insertUser: async (idUser) => {
 
         try {
+            
+                const user = await Queue.findOne({ user: idUser })
 
+                if(!user){
+                    await Queue.create({
+                        user: idUser
+                    })
 
-            const user = await Queue.create({
-                user: idUser
-            })
+                    return console.log(`${idUser} added to the queue`)
+                }
 
-            return console.log(`${idUser} added to the queue`)
-
-
+                user.enteredAt = new Date()
+                user.quantityAtendimentos = 0
+                await user.save()
+                  
+                console.log(user)
 
         } catch (error) {
             return `Erro ao adicionar usuário à fila: ${error}`
@@ -40,6 +47,7 @@ const queueController = {
             const formattedQueues = queues.map(queue => {
                 return {
                   user: queue.user.name,
+                  quantityAtendimentos: queue.quantityAtendimentos,
                   enteredAt: formatarHora(queue.enteredAt)
                 };
               });
